@@ -14,7 +14,7 @@ func ParseQuery(query string) (Values, error) {
 	return Values(val), err
 }
 
-type Values map[string][]string
+type Values url.Values
 
 func (v Values) Get(key string) string {
 	if v == nil {
