@@ -1,0 +1,46 @@
+package parsestr
+
+import (
+	"net/url"
+	"regexp"
+)
+
+func ParseURLValues(val url.Values) Values {
+	return Values(val)
+}
+
+func ParseQuery(query string) (Values, error) {
+	val, err := url.ParseQuery(query)
+	return Values(val), err
+}
+
+type Values map[string][]string
+
+func (v Values) Get(key string) string {
+	if v == nil {
+		return ""
+	}
+	vs := v[key]
+	if len(vs) == 0 {
+		return ""
+	}
+	return vs[0]
+}
+
+func (v Values) GetSub(key string) Values {
+	ret := Values{}
+
+	r := regexp.MustCompile(`^` + regexp.QuoteMeta(key) + `\[([^\]]*)]`)
+	for i, e := range v {
+		m := r.FindStringSubmatch(i)
+		if len(m) > 0 {
+			if ret[m[1]] == nil {
+				ret[m[1]] = []string{}
+			}
+
+			ret[m[1]] = append(ret[m[1]], e...)
+		}
+	}
+
+	return ret
+}
