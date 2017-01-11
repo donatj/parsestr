@@ -17,14 +17,7 @@ func ParseQuery(query string) (Values, error) {
 type Values url.Values
 
 func (v Values) Get(key string) string {
-	if v == nil {
-		return ""
-	}
-	vs := v[key]
-	if len(vs) == 0 {
-		return ""
-	}
-	return vs[0]
+	return url.Values(v).Get(key)
 }
 
 func (v Values) GetSub(key string) Values {
