@@ -1,5 +1,5 @@
 // Package parsestr is a simple Golang library emulating the query parsing
-// behaviour of the PHP parse_str.
+// behavior of the PHP parse_str.
 //
 // See: http://us2.php.net/manual/en/function.parse-str.php
 package parsestr
